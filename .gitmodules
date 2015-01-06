@@ -1,0 +1,3 @@
+[submodule "wren-sys"]
+	path = wren-sys
+	url = https://github.com/pwoolcoc/wren-sys

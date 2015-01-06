@@ -11,4 +11,4 @@ description = "Embed the Wren programming language in your Rust program"
 
 [dependencies.wren-sys]
 path = "wren-sys"
-version = "0.1.2"
+version = "0.1.4"
