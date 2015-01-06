@@ -1,8 +1,13 @@
 [package]
 
 name = "wren-rs"
-version = "0.0.1"
+version = "0.1.0"
 authors = ["Paul Woolcock <paul@woolcock.us>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/pwoolcoc/wren-rs"
+homepage = "https://github.com/pwoolcoc/wren-rs"
+description = "Embed the Wren programming language in your Rust program"
 
 [dependencies.wren-sys]
 path = "wren-sys"
