@@ -1,18 +1,17 @@
 extern crate wren_sys as raw;
 extern crate libc;
 
-use std::ops::{Drop};
 use std::ffi::CString;
 
-struct VM {
+pub struct VM {
     _vm: *mut raw::WrenVM
 }
 
-struct Config {
+pub struct Config {
     raw: *mut raw::WrenConfiguration
 }
 
-enum Error {
+pub enum Error {
     CompileError(String),
     RuntimeError(String),
     UnknownError(String),
