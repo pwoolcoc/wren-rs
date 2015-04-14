@@ -9,6 +9,6 @@ repository = "https://github.com/pwoolcoc/wren-rs"
 homepage = "https://github.com/pwoolcoc/wren-rs"
 description = "Embed the Wren programming language in your Rust program"
 
-[dependencies.wren-sys]
-path = "wren-sys"
-version = "0.1.4"
+[dependencies]
+wren-sys = "*"
+libc = "*"

@@ -1,9 +1,8 @@
-#![feature(unsafe_destructor)]
-extern crate "wren-sys" as raw;
+extern crate wren_sys as raw;
 extern crate libc;
 
 use std::ops::{Drop};
-use std::c_str::ToCStr;
+use std::ffi::CString;
 
 struct VM {
     _vm: *mut raw::WrenVM
@@ -17,6 +16,10 @@ enum Error {
     CompileError(String),
     RuntimeError(String),
     UnknownError(String),
+}
+
+extern "C" fn default_load_module_fn(vm: *mut raw::WrenVM, name: *const libc::c_char) -> *const libc::c_char {
+    CString::new("hello, wren!").unwrap().as_ptr()
 }
 
 impl Config {
@@ -34,7 +37,8 @@ impl std::default::Default for Config {
                 reallocateFn: None,
                 initialHeapSize: (1024i32 * 1024i32 * 100i32) as libc::size_t,
                 minHeapSize: 0i32 as libc::size_t,
-                heapGrowthPercent: 0i32
+                heapGrowthPercent: 0i32,
+                loadModuleFn: default_load_module_fn,
             })
         }
     }
@@ -53,8 +57,8 @@ impl VM {
     pub fn interpret(&self, source_path: &str, source: &str) -> Result<(), Error> {
         unsafe {
             let result = raw::wrenInterpret(self._vm,
-                                            source_path.to_c_str().as_ptr(),
-                                            source.to_c_str().as_ptr());
+                                            CString::new(source_path).unwrap().as_ptr(),
+                                            CString::new(source).unwrap().as_ptr());
             match result {
                 raw::WREN_RESULT_SUCCESS => Ok(()),
                 raw::WREN_RESULT_COMPILE_ERROR => Err(Error::CompileError("".to_string())),
